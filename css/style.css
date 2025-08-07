@@ -1,0 +1,227 @@
+/* ===================
+   GC Dance Academy Style
+   =================== */
+
+:root {
+  --color-primary: #6C25FF;
+  --color-secondary: #FF2E93;
+  --color-accent1: #8926E9;
+  --color-accent2: #A628D3;
+  --color-background1: #000000;
+  --color-background2: #000000;
+  --color-text1: #FFFFFF;
+  --color-text2: #B4B4B4;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--color-background1);
+  color: var(--color-text1);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section {
+  padding: 4rem 0;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+  background-color: var(--color-background1);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--color-accent1);
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: var(--color-text1);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--color-secondary);
+}
+
+/* ========== HERO ========== */
+.hero {
+  background: url('../images/hero.jpg') no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  color: var(--color-text1);
+}
+
+.hero-content {
+  text-align: left;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cta-button {
+  background-color: var(--color-secondary);
+  color: var(--color-text1);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: var(--color-accent2);
+}
+
+/* ========== ABOUT ========== */
+.about {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+}
+
+.about-text {
+  flex: 1;
+}
+
+.about-img img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+/* ========== PROGRAMLAR ========== */
+.program-cards {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  background-color: var(--color-background2);
+  border: 1px solid var(--color-accent1);
+  padding: 2rem;
+  border-radius: 8px;
+  flex: 1 1 30%;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px var(--color-accent1);
+}
+
+.card i {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color-secondary);
+}
+
+/* ========== EĞİTMENLER ========== */
+.instructor-grid {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.instructor-card {
+  flex: 1 1 22%;
+  text-align: center;
+}
+
+.instructor-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+/* ========== GALERİ ========== */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.05);
+}
+
+/* ========== CONTACT ========== */
+.contact-info p {
+  margin: 0.5rem 0;
+  color: var(--color-text2);
+}
+
+.map iframe {
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  background-color: var(--color-background1);
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--color-text2);
+  border-top: 1px solid var(--color-accent1);
+}
+
+.social-icons {
+  margin-bottom: 1rem;
+}
+
+.social-icons a {
+  color: var(--color-accent1);
+  margin: 0 0.5rem;
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: var(--color-primary);
+}
