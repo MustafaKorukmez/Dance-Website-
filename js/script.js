@@ -52,3 +52,23 @@ navLinks.querySelectorAll('a').forEach(link => {
     navLinks.classList.remove('active');
   });
 });
+
+// Galeri görselleri için modal
+const galleryImages = document.querySelectorAll('.gallery-grid img');
+const imageModal = document.getElementById('image-modal');
+const modalImg = document.getElementById('modal-img');
+const modalClose = imageModal.querySelector('.close');
+
+galleryImages.forEach(img => {
+  img.addEventListener('click', () => {
+    modalImg.src = img.src;
+    imageModal.classList.add('show');
+  });
+});
+
+imageModal.addEventListener('click', (e) => {
+  if (e.target === imageModal || e.target === modalClose) {
+    imageModal.classList.remove('show');
+    modalImg.src = '';
+  }
+});
