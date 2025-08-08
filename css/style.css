@@ -301,6 +301,10 @@ button:hover::after,
 }
 
 /* ========== EĞİTMENLER ========== */
+.instructors {
+  min-height: 500px;
+}
+
 .instructor-carousel {
   position: relative;
   overflow: hidden;
@@ -317,7 +321,7 @@ button:hover::after,
 .instructor-card {
   flex: 0 0 33.333%;
   max-width: 33.333%;
-  height: 320px;
+  height: 420px;
   perspective: 1000px;
   transition: transform 0.5s ease, filter 0.5s ease, opacity 0.5s ease;
   transform: scale(0.85);
@@ -382,6 +386,7 @@ button:hover::after,
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top;
 }
 
 .card-front h4,
