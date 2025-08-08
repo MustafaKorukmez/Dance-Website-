@@ -38,6 +38,18 @@ body {
   transform: translateY(0);
 }
 
+/* Scroll Progress Bar */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  background: var(--color-secondary);
+  z-index: 1001;
+  pointer-events: none;
+}
+
 /* ========== NAVBAR ========== */
 .navbar {
   background-color: var(--color-background1);
