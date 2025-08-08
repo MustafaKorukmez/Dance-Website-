@@ -15,3 +15,10 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.section').forEach(element => {
   observer.observe(element);
 });
+
+// Mobil cihazlar için eğitmen kartlarında tıklama ile flip efekti
+document.querySelectorAll('.instructor-card').forEach(card => {
+  card.addEventListener('click', () => {
+    card.classList.toggle('flipped');
+  });
+});
