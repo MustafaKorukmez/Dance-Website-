@@ -36,28 +36,72 @@ document.querySelectorAll('.instructor-card').forEach(card => {
   });
 });
 
-// Eğitmen slider'ı ok butonları
+// Eğitmen slider'ı
 const instructorTrack = document.querySelector('.instructor-track');
+const instructorCards = instructorTrack ? Array.from(instructorTrack.querySelectorAll('.instructor-card')) : [];
 const prevBtn = document.querySelector('.carousel-btn.prev');
 const nextBtn = document.querySelector('.carousel-btn.next');
 
-if (instructorTrack && prevBtn && nextBtn) {
-  const getScrollAmount = () => {
-    const card = instructorTrack.querySelector('.instructor-card');
-    if (!card) return 0;
-    const style = getComputedStyle(instructorTrack);
-    const gap = parseInt(style.columnGap || style.gap) || 0;
-    return card.getBoundingClientRect().width + gap;
-  };
+// Kartı merkeze kaydır
+const scrollToCard = (card, smooth = true) => {
+  if (!instructorTrack || !card) return;
+  const left = card.offsetLeft - (instructorTrack.clientWidth - card.clientWidth) / 2;
+  instructorTrack.scrollTo({ left, behavior: smooth ? 'smooth' : 'auto' });
+};
 
-  prevBtn.addEventListener('click', () => {
-    instructorTrack.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+// Aktif kartı güncelle
+const updateActiveCard = () => {
+  if (!instructorTrack) return;
+  const trackRect = instructorTrack.getBoundingClientRect();
+  const center = trackRect.left + trackRect.width / 2;
+  let active = instructorCards[0];
+  let minDiff = Infinity;
+  instructorCards.forEach(card => {
+    const rect = card.getBoundingClientRect();
+    const cardCenter = rect.left + rect.width / 2;
+    const diff = Math.abs(center - cardCenter);
+    if (diff < minDiff) {
+      minDiff = diff;
+      active = card;
+    }
   });
+  instructorCards.forEach(card => card.classList.toggle('active', card === active));
+};
 
-  nextBtn.addEventListener('click', () => {
-    instructorTrack.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+if (instructorTrack) {
+  // Başlangıçta ikinci kartı merkezle
+  scrollToCard(instructorCards[1] || instructorCards[0], false);
+  updateActiveCard();
+  instructorTrack.addEventListener('scroll', () => window.requestAnimationFrame(updateActiveCard));
+  window.addEventListener('resize', updateActiveCard);
+
+  // Mouse tekerleğini yatay kaydırma için kullan
+  instructorTrack.addEventListener('wheel', e => {
+    e.preventDefault();
+    instructorTrack.scrollBy({ left: e.deltaY, behavior: 'smooth' });
+  }, { passive: false });
+}
+
+// Butonlar ile navigasyon
+if (prevBtn) {
+  prevBtn.addEventListener('click', () => {
+    const index = instructorCards.findIndex(card => card.classList.contains('active'));
+    if (index > 0) scrollToCard(instructorCards[index - 1]);
   });
 }
+
+if (nextBtn) {
+  nextBtn.addEventListener('click', () => {
+    const index = instructorCards.findIndex(card => card.classList.contains('active'));
+    if (index < instructorCards.length - 1) scrollToCard(instructorCards[index + 1]);
+  });
+}
+
+// Klavye yön tuşları
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') prevBtn?.click();
+  if (e.key === 'ArrowRight') nextBtn?.click();
+});
 
 // Hamburger menü
 const hamburger = document.querySelector('.hamburger');
