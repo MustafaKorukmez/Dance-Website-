@@ -29,71 +29,76 @@ document.querySelectorAll('.section').forEach(element => {
   observer.observe(element);
 });
 
-// Mobil cihazlar için eğitmen kartlarında tıklama ile flip efekti
-document.querySelectorAll('.instructor-card').forEach(card => {
-  card.addEventListener('click', () => {
-    card.classList.toggle('flipped');
-  });
-});
-
 // Eğitmen slider'ı
+const instructorCarousel = document.querySelector('.instructor-carousel');
 const instructorTrack = document.querySelector('.instructor-track');
-const instructorCards = instructorTrack ? Array.from(instructorTrack.querySelectorAll('.instructor-card')) : [];
 const prevBtn = document.querySelector('.carousel-btn.prev');
 const nextBtn = document.querySelector('.carousel-btn.next');
 
-// Kartı merkeze kaydır
-const scrollToCard = (card, smooth = true) => {
-  if (!instructorTrack || !card) return;
-  const left = card.offsetLeft - (instructorTrack.clientWidth - card.clientWidth) / 2;
-  instructorTrack.scrollTo({ left, behavior: smooth ? 'smooth' : 'auto' });
-};
+if (instructorTrack && instructorCarousel) {
+  // Sonsuz döngü için ilk ve son slaytları klonla
+  let slides = Array.from(instructorTrack.children);
+  const firstClone = slides[0].cloneNode(true);
+  const lastClone = slides[slides.length - 1].cloneNode(true);
+  firstClone.classList.add('clone');
+  lastClone.classList.add('clone');
+  instructorTrack.appendChild(firstClone);
+  instructorTrack.insertBefore(lastClone, slides[0]);
+  slides = Array.from(instructorTrack.children);
 
-// Aktif kartı güncelle
-const updateActiveCard = () => {
-  if (!instructorTrack) return;
-  const trackRect = instructorTrack.getBoundingClientRect();
-  const center = trackRect.left + trackRect.width / 2;
-  let active = instructorCards[0];
-  let minDiff = Infinity;
-  instructorCards.forEach(card => {
-    const rect = card.getBoundingClientRect();
-    const cardCenter = rect.left + rect.width / 2;
-    const diff = Math.abs(center - cardCenter);
-    if (diff < minDiff) {
-      minDiff = diff;
-      active = card;
+  let index = 1; // İlk gerçek slayt
+
+  const setActive = () => {
+    slides.forEach((s, i) => s.classList.toggle('active', i === index));
+  };
+
+  const moveToIndex = (i, animate = true) => {
+    const cardWidth = slides[i].offsetWidth;
+    const gap = parseFloat(getComputedStyle(instructorTrack).gap) || 0;
+    const containerWidth = instructorCarousel.clientWidth;
+    const offset = (cardWidth + gap) * i - (containerWidth - cardWidth) / 2;
+    instructorTrack.style.transition = animate ? 'transform 0.5s ease' : 'none';
+    instructorTrack.style.transform = `translateX(-${offset}px)`;
+    setActive();
+  };
+
+  moveToIndex(index, false);
+
+  nextBtn?.addEventListener('click', () => {
+    index++;
+    moveToIndex(index);
+  });
+
+  prevBtn?.addEventListener('click', () => {
+    index--;
+    moveToIndex(index);
+  });
+
+  instructorTrack.addEventListener('transitionend', () => {
+    if (slides[index].classList.contains('clone')) {
+      index = slides[index] === firstClone ? 1 : slides.length - 2;
+      moveToIndex(index, false);
     }
   });
-  instructorCards.forEach(card => card.classList.toggle('active', card === active));
-};
 
-if (instructorTrack) {
-  // Başlangıçta ikinci kartı merkezle
-  scrollToCard(instructorCards[1] || instructorCards[0], false);
-  updateActiveCard();
-  instructorTrack.addEventListener('scroll', () => window.requestAnimationFrame(updateActiveCard));
-  window.addEventListener('resize', updateActiveCard);
+  window.addEventListener('resize', () => moveToIndex(index, false));
 
-  // Mouse tekerleğini yatay kaydırma için kullan
-  instructorTrack.addEventListener('wheel', e => {
-    e.preventDefault();
-    instructorTrack.scrollBy({ left: e.deltaY, behavior: 'smooth' });
-  }, { passive: false });
-}
-
-// Butonlar ile navigasyon
-if (prevBtn) {
-  prevBtn.addEventListener('click', () => {
-    const index = instructorCards.findIndex(card => card.classList.contains('active'));
-    if (index > 0) scrollToCard(instructorCards[index - 1]);
+  // Swipe desteği
+  let startX = 0;
+  instructorCarousel.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+  }, { passive: true });
+  instructorCarousel.addEventListener('touchend', (e) => {
+    const diff = e.changedTouches[0].clientX - startX;
+    if (Math.abs(diff) > 50) {
+      diff < 0 ? nextBtn?.click() : prevBtn?.click();
+    }
   });
-}
 
-if (nextBtn) {
-  nextBtn.addEventListener('click', () => {
-    const index = instructorCards.findIndex(card => card.classList.contains('active'));
-    if (index < instructorCards.length - 1) scrollToCard(instructorCards[index + 1]);
+  // Flip efekti
+  instructorTrack.addEventListener('click', (e) => {
+    const card = e.target.closest('.instructor-card');
+    if (card) card.classList.toggle('flipped');
   });
 }
 
