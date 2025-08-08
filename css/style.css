@@ -310,8 +310,9 @@ button:hover::after,
   gap: 2rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 1rem;
+  padding: 2rem 0;
 }
 
 .instructor-track::-webkit-scrollbar {
@@ -321,9 +322,22 @@ button:hover::after,
 /* Eğitmen kartları - flip efekti */
 .instructor-card {
   flex: 0 0 250px;
-  scroll-snap-align: start;
-  perspective: 1000px;
   height: 320px;
+  perspective: 1000px;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  transition: transform 0.4s ease, filter 0.4s ease, opacity 0.4s ease;
+  transform: scale(0.8);
+  opacity: 0.6;
+  filter: brightness(0.6) blur(1px);
+  z-index: 1;
+}
+
+.instructor-card.active {
+  transform: scale(1.05);
+  opacity: 1;
+  filter: none;
+  z-index: 2;
 }
 
 .carousel-btn {
