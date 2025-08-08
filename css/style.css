@@ -277,12 +277,13 @@ button:hover::after,
 
 /* Glassmorphism kart tasarımı */
 .card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
   padding: 2rem;
-  border-radius: 8px;
+  border-radius: 12px;
   flex: 1 1 30%;
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
@@ -290,7 +291,7 @@ button:hover::after,
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 40px rgba(0, 0, 0, 0.2);
 }
 
 .card i {
