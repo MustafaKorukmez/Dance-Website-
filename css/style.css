@@ -75,14 +75,41 @@ body {
 
 /* ========== HERO ========== */
 .hero {
+  position: relative;
   background: url('../images/hero.jpg') no-repeat center center/cover;
   height: 100vh;
   display: flex;
   align-items: center;
   color: var(--color-text1);
+  overflow: hidden;
+}
+
+/* Video arka planı kaplaması için */
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Koyu katman */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
 }
 
 .hero-content {
+  position: relative;
+  z-index: 2;
   text-align: left;
 }
 
@@ -134,9 +161,12 @@ body {
   justify-content: space-between;
 }
 
+/* Glassmorphism kart tasarımı */
 .card {
-  background-color: var(--color-background2);
-  border: 1px solid var(--color-accent1);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 2rem;
   border-radius: 8px;
   flex: 1 1 30%;
@@ -146,7 +176,7 @@ body {
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0 15px var(--color-accent1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 .card i {
@@ -162,15 +192,71 @@ body {
   flex-wrap: wrap;
 }
 
+/* Eğitmen kartları - flip efekti */
 .instructor-card {
   flex: 1 1 22%;
+  perspective: 1000px;
+  height: 320px;
+}
+
+.instructor-card .card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.instructor-card:hover .card-inner,
+.instructor-card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  overflow: hidden;
   text-align: center;
 }
 
-.instructor-card img {
+.card-front img {
   width: 100%;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-front h4,
+.card-front p {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  margin: 0;
+  color: var(--color-text1);
+}
+
+.card-front h4 {
+  bottom: 2.5rem;
+}
+
+.card-front p {
+  bottom: 0.5rem;
+}
+
+.card-back {
+  background-color: var(--color-background2);
+  border: 1px solid var(--color-accent1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  transform: rotateY(180deg);
 }
 
 /* ========== GALERİ ========== */
