@@ -303,38 +303,31 @@ button:hover::after,
 /* ========== EĞİTMENLER ========== */
 .instructor-carousel {
   position: relative;
+  overflow: hidden;
 }
 
 .instructor-track {
   display: flex;
   gap: 2rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
   padding: 2rem 0;
+  transition: transform 0.5s ease;
 }
 
-.instructor-track::-webkit-scrollbar {
-  display: none;
-}
-
-/* Eğitmen kartları - flip efekti */
+/* Eğitmen kartları - flip ve derinlik efekti */
 .instructor-card {
-  flex: 0 0 250px;
+  flex: 0 0 33.333%;
+  max-width: 33.333%;
   height: 320px;
   perspective: 1000px;
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
-  transition: transform 0.4s ease, filter 0.4s ease, opacity 0.4s ease;
-  transform: scale(0.8);
-  opacity: 0.6;
-  filter: brightness(0.6) blur(1px);
+  transition: transform 0.5s ease, filter 0.5s ease, opacity 0.5s ease;
+  transform: scale(0.85);
+  opacity: 0.5;
+  filter: brightness(0.7);
   z-index: 1;
 }
 
 .instructor-card.active {
-  transform: scale(1.05);
+  transform: scale(1);
   opacity: 1;
   filter: none;
   z-index: 2;
@@ -543,8 +536,10 @@ button:hover::after,
   }
 
   .instructor-card {
-    flex: 0 0 80%;
-    max-width: 300px;
+    flex: 0 0 100%;
+    max-width: 100%;
+    border: 2px solid var(--color-accent1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   }
 
   .carousel-btn {
