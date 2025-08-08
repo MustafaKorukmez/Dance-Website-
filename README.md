@@ -21,5 +21,4 @@ Bu proje, GC Dance Academy için hazırlanan modern ve responsive bir tanıtım 
 ## Gelecek Geliştirmeler
 - Galeri filtreleme (JS ile)
 - Eğitmen kartlarında flip effect
-- Responsive hamburger menü
 - Daha fazla animasyon

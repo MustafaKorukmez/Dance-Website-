@@ -35,3 +35,20 @@ document.querySelectorAll('.instructor-card').forEach(card => {
     card.classList.toggle('flipped');
   });
 });
+
+// Hamburger menü
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  navLinks.classList.toggle('active');
+});
+
+// Menüden bağlantı seçildiğinde menüyü kapat
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('active');
+  });
+});
