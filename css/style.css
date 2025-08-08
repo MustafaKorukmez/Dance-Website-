@@ -301,17 +301,50 @@ button:hover::after,
 }
 
 /* ========== EĞİTMENLER ========== */
-.instructor-grid {
+.instructor-carousel {
+  position: relative;
+}
+
+.instructor-track {
   display: flex;
   gap: 2rem;
-  flex-wrap: wrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 1rem;
+}
+
+.instructor-track::-webkit-scrollbar {
+  display: none;
 }
 
 /* Eğitmen kartları - flip efekti */
 .instructor-card {
-  flex: 1 1 22%;
+  flex: 0 0 250px;
+  scroll-snap-align: start;
   perspective: 1000px;
   height: 320px;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: var(--color-text1);
+  font-size: 2rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-btn.prev {
+  left: -1rem;
+}
+
+.carousel-btn.next {
+  right: -1rem;
 }
 
 .instructor-card .card-inner {
@@ -491,14 +524,17 @@ button:hover::after,
     flex: 1 1 100%;
   }
 
-  .instructor-grid {
-    flex-direction: column;
-    align-items: center;
+  .instructor-track {
+    gap: 1rem;
   }
 
   .instructor-card {
-    flex: 1 1 100%;
+    flex: 0 0 80%;
     max-width: 300px;
+  }
+
+  .carousel-btn {
+    display: none;
   }
 }
 

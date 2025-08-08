@@ -36,6 +36,29 @@ document.querySelectorAll('.instructor-card').forEach(card => {
   });
 });
 
+// Eğitmen slider'ı ok butonları
+const instructorTrack = document.querySelector('.instructor-track');
+const prevBtn = document.querySelector('.carousel-btn.prev');
+const nextBtn = document.querySelector('.carousel-btn.next');
+
+if (instructorTrack && prevBtn && nextBtn) {
+  const getScrollAmount = () => {
+    const card = instructorTrack.querySelector('.instructor-card');
+    if (!card) return 0;
+    const style = getComputedStyle(instructorTrack);
+    const gap = parseInt(style.columnGap || style.gap) || 0;
+    return card.getBoundingClientRect().width + gap;
+  };
+
+  prevBtn.addEventListener('click', () => {
+    instructorTrack.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+  });
+
+  nextBtn.addEventListener('click', () => {
+    instructorTrack.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+  });
+}
+
 // Hamburger menü
 const hamburger = document.querySelector('.hamburger');
 const navLinks = document.querySelector('.nav-links');
