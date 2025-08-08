@@ -29,6 +29,19 @@ document.querySelectorAll('.section').forEach(element => {
   observer.observe(element);
 });
 
+// Program kartları için scroll animasyonu
+const programCards = document.querySelectorAll('.program-cards .card');
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      cardObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+programCards.forEach(card => cardObserver.observe(card));
+
 // Eğitmen slider'ı
 const instructorCarousel = document.querySelector('.instructor-carousel');
 const instructorTrack = document.querySelector('.instructor-track');
